@@ -17,7 +17,7 @@ import environ, os
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Initialise environment variables
-env = environ.Env(DEBUG=(bool, False)),  # Default to False if not set
+env = environ.Env(DEBUG=(bool, False))  # Default to False if not set
 environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
 
 
@@ -25,7 +25,7 @@ environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = env("DJANGO_SECRET_KEY", defaul= "dev-only-secret")
+SECRET_KEY = env("DJANGO_SECRET_KEY", default= "insecure-key-for-dev-only")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env.bool("DEBUG", default=True)
@@ -127,12 +127,14 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
 STATIC_URL = 'static/'
+STATIC_ROOT = BASE_DIR / 'staticfiles'
 
+NPM_BIN_PATH = r"C:\Users\Bakarr\anaconda3\envs\ubssl_portal\npm.cmd"  # Path to npm executable
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 TAILWIND_APP_NAME = 'theme'
+INTERNAL_IPS = ["127.0.0.1"]
 
-STATIC_ROOT = BASE_DIR / 'staticfiles'
