@@ -1,9 +1,14 @@
 import uuid #unique identifier for each model instance
+from uuid import uuid4 #to generate UUIDs
 from django.db import models
 from django.core.validators import FileExtensionValidator # File type validation
 from django.core.exceptions import ValidationError # Custom validation errors
+from django.template.defaultfilters import filesizeformat # To format file sizes
+MAX_MB = 5
 
-
+def validate_file_size(value):
+    if value.size > MAX_MB * 1024 * 1024:  # Convert MB to bytes
+        raise ValidationError(f"File > {MAX_MB} MB (it's {filesizeformat(value.size)})")
 
 # Create your models here.
 
@@ -58,8 +63,7 @@ class Applicant(models.Model):
         if not self.essay_text and not self.essay_upload:
             raise ValidationError("Please provide either typed essay text or an uploaded scan.")
         if self.essay_text and self.essay_upload:
-            #allowed we just don't want neither to be empty
-            pass
+            raise ValidationError("Please provide either typed essay text or an uploaded scan, not both.")  
 
     def __str__(self):
         return f"{self.full_name} - {self.year} - {self.status}"
@@ -81,7 +85,7 @@ class RecommendationLetter(models.Model):
             raise ValidationError("File size must be less than 5MB.")
         
         #max two recommendation letters per applicant
-        existing_count = RecomendationLetter.objects.filter(applicant=self.applicant).exclude(pk=self.pk).count()
+        existing_count = RecommendationLetter.objects.filter(applicant=self.applicant).exclude(pk=self.pk).count()
         if existing_count >= 2:
             raise ValidationError("You can only upload a maximum of two recommendation letters.")
     
