@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <title>{% block title %}UBSSL Scholarship{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'css/dist/styles.css' %}">
+</head>
+<body class="bg-gray-50 min-h-screen flex flex-col">
+    <main class="flex-1">
+        {% block content %}{% endblock %}
+    </main>
+    <footer class="text-center text-xs py-4 text-gray-400">
+        &copy; {{ now|date:"Y" }} UBSSL
+    </footer>
+</body>
+</html>

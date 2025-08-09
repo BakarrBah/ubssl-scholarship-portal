@@ -2,6 +2,8 @@
 {% load static %}
 {% block title %}Scholarship Application{% endblock %}
 {% block content %}
+<div class="bg-gray-100 py-8">
+  <div class="max-w-xl mx-auto p-6 bg-white rounded-xl shadow">
 <div class="max-w-xl mx-auto mt-8 p-6 bg-white rounded-xl shadow">
   <h1 class="text-2xl font-bold mb-4 text-center">Scholarship Application</h1>
 
@@ -10,7 +12,7 @@
     {{ form.non_field_errors }}
     {% for field in form %}
       <div>
-        <label class="block font-semibold mb-1">{{ field.label }}</label>
+        <label class="block font-semibold mb-1 text-gray-700">{{ field.label }}</label>
         {{ field }}
         {% if field.help_text %}<p class="text-sm text-gray-500">{{ field.help_text }}</p>{% endif %}
         {{ field.errors }}
